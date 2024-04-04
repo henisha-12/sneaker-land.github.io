@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset( $_SESSION["email"])) {
+  die("");
+}
 
   $pid = $_GET['p_id'];
   require('../../database/connect.php');
@@ -26,6 +29,11 @@ session_start();
   <link rel="shortcut icon" href="../../images/favicon.png" />
   
 </head>
+<script>
+  function logout(){
+    window.close();
+  }
+</script>
 <body>
   <div class="container-scroller">
     <!-- partial:../../partials/_horizontal-navbar.html -->
@@ -39,8 +47,11 @@ session_start();
             </div>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown  d-lg-flex d-none">
-              <a  href="../logout.php" target="_blank" onclick= "window.close();" class="btn btn-inverse-primary btn-sm">Log Out </a>
+              <a  href="../logout.php" target="_blank" onclick= "logout()" class="btn btn-inverse-primary btn-sm">Log Out </a>
                       </li>
+				<li class="nav-item dropdown  d-lg-flex d-none">
+				<a  href="" class="btn btn-inverse-primary btn-sm">Change Password </a>
+                </li>
               <li class="nav-item nav-profile">
                           <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                   <span class="nav-profile-name"><?php echo $_SESSION['email'] ?></span>

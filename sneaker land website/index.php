@@ -5,7 +5,9 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Login Page in HTML with CSS Code Example</title>
+  <title>Sneaker Land - Admin</title>
+  <link rel="icon" href="website/template/images/amusement-park.png" type="image/x-icon">
+
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
 

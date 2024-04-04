@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if (!isset( $_SESSION["email"])) {
+      die("");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -9,22 +12,22 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Kapella Bootstrap Admin Dashboard Template</title>
+  <title>Sneaker Land - Admin</title>
   <!-- base:css -->
   <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../vendors/base/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- inject:css -->
   <link rel="stylesheet" href="../../css/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <!-- endinject -->  
+  <link rel="icon" href="../../images/amusement-park.png" type="image/x-icon">
+
   
 </head>
 <script>
-function ConfirmDelete()
-{
-  return confirm("Are you sure you want to delete?");
-}
+  function logout(){
+    window.close();
+  }
 </script>
 <body>
   <div class="container-scroller">
@@ -39,10 +42,13 @@ function ConfirmDelete()
             </div>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown  d-lg-flex d-none">
-              <a  href="../logout.php" target="_blank" onclick= "window.close();" class="btn btn-inverse-primary btn-sm">Log Out </a>
+              <a  href="../logout.php" target="_blank" onclick= "logout()" class="btn btn-inverse-primary btn-sm">Log Out </a>
                       </li>
+				<li class="nav-item dropdown  d-lg-flex d-none">
+				<a  href="../change_pass.php" class="btn btn-inverse-primary btn-sm">Change Password </a>
+                </li>
               <li class="nav-item nav-profile">
-                          <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                          <a class="nav-link" href="../edit_profile.php" data-bs-toggle="dropdown" id="profileDropdown">
                   <span class="nav-profile-name"><?php echo $_SESSION['email'] ?></span>
                   <span class="online-status"></span>
                             <img src="../../images/faces/face28.png" alt="profile"/>
@@ -139,16 +145,16 @@ function ConfirmDelete()
                       <div class='card-body'>
                         <h4 class='card-title'>Add Package</h4>
                         <form action="" method="POST">
-                          <label for="pnm">Package Name</label><br>
-                          <input class='form-control border-dark' name="pnm" type="text" id='pnm' required/><br>
-                          <label for="aprc">Adult Price</label><br>
-                          <input class='form-control border-dark' name="aprc" type="number" id='aprc' step='500' min='0' required/><br>
-                          <label for="tprc">Teenager Price</label><br>
-                          <input class='form-control border-dark' name="tprc" type="number" id='tprc' step='500' min='0' required/><br>
-                          <label for="kprc">Kids Price</label><br>
-                          <input class='form-control border-dark' name="kprc" type="number" id='kprc' step='500' min='0' required/><br>
-                          <label for="info">Information</label><br>
-                          <textarea class='form-control border-dark' name="info" id='info' rows=5 required></textarea><br>
+                          <label for="pnm">Package Name</label><span class="err" id="pnm_err">*</span><br>
+                          <input class='form-control border-dark' name="pnm" type="text" id='pnm'/><br>
+                          <label for="aprc">Adult Price</label><span class="err" id="aprc_err">*</span><br>
+                          <input class='form-control border-dark' name="aprc" type="number" id='aprc' step='500' min='0'/><br>
+                          <label for="tprc">Teenager Price</label><span class="err" id="tprc_err">*</span><br>
+                          <input class='form-control border-dark' name="tprc" type="number" id='tprc' step='500' min='0'/><br>
+                          <label for="kprc">Kids Price</label><span class="err" id="kprc_err">*</span><br>
+                          <input class='form-control border-dark' name="kprc" type="number" id='kprc' step='500' min='0'/><br>
+                          <label for="info">Information</label><span class="err" id="info_err">*</span><br>
+                          <textarea class='form-control border-dark' name="info" id='info' rows=5></textarea><br>
                           <input class='w-100 btn btn-inverse-primary btn-large btn-block ' name="add" type="submit" value="Add Package">
                         </form>
                       </div>
@@ -171,9 +177,66 @@ function ConfirmDelete()
           $tprc=$_REQUEST['tprc'];
           $kprc=$_REQUEST['kprc'];
           $info=$_REQUEST['info'];
+
+          if ($pnm == "" || $aprc == "" || $tprc== "" || $kprc == "" || $info == "") {
+            if($pnm == ""){
+              $pnm_err = "Please enter package name";
+              echo "<script> document.querySelector('#pnm_err').innerHTML='$pnm_err'</script>";
+            }
+            else{
+              $pnm_err = "*";
+              echo "<script> document.querySelector('#pnm_err').innerHTML='$pnm_err'</script>";
+            
+            }
+
+
+            if($aprc == ""){
+              $aprc_err = "Please enter adult price";
+              echo "<script> document.querySelector('#aprc_err').innerHTML='$aprc_err'</script>";
+            }
+            else{
+              $aprc_err = "*";
+              echo "<script> document.querySelector('#aprc_err').innerHTML='$aprc_err'</script>";
+            
+            }
+
+
+            if($tprc == ""){
+              $tprc_err = "Please enter Teenager price";
+              echo "<script> document.querySelector('#tprc_err').innerHTML='$tprc_err'</script>";
+            }
+            else{
+              $tprc_err = "*";
+              echo "<script> document.querySelector('#tprc_err').innerHTML='$tprc_err'</script>";
+            
+            }
+
+
+            if($kprc == ""){
+              $kprc_err = "Please enter kid price";
+              echo "<script> document.querySelector('#kprc_err').innerHTML='$kprc_err'</script>";
+            }
+            else{
+              $kprc_err = "*";
+              echo "<script> document.querySelector('#kprc_err').innerHTML='$kprc_err'</script>";
+            
+            }
+
+            
+            if($info == ""){
+              $info_err = "Please enter package information";
+              echo "<script> document.querySelector('#info_err').innerHTML='$info_err'</script>";
+            }
+            else{
+              $info_err = "*";
+              echo "<script> document.querySelector('#info_err').innerHTML='$info_err'</script>";
+            
+            }
+          }
+          else{
           
-          $q = "insert into tbl_package values(null,'$pnm','$aprc','$tprc','$kprc','$info')";
-          echo $q;
+            $q = "insert into tbl_package values(null,'$pnm','$aprc','$tprc','$kprc','$info')";
+            echo $q;
             if (mysqli_query($mysql,$q)) {
                 echo "Inserted Successfully!!";
                 echo "<script type='text/javascript'>window.location.href='../Package.php'</script>";
@@ -181,6 +244,6 @@ function ConfirmDelete()
               else{
                 echo "<h1>Insertion Failed!!!</h1>";
               }
-            
+            } 
           }
         ?>

@@ -10,11 +10,15 @@ url("../fonts/flaticon681a.svg?1df927c4626e072d7cc017c3d3023445#flaticon") forma
 i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
     font-family: flaticon !important;
     font-style: normal;
-    font-weight: 600 !important;
+    font-weight: normal !important;
     font-variant: normal;
     text-transform: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-star:before{
+    content: '\f005';
 }
 
 .flaticon-pin:before {

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Restar-Amusment Park</title>
+    <title>Sneaker Land-Adventure Park</title>
 
     <!-- Fav Icon -->
     <link rel="icon" href="assets/images/amusement-park.png" type="image/x-icon">
@@ -105,7 +105,7 @@
                             <div class="row clearfix rd">
                                 <?php
                                     require("connect.php");
-                                    $q="select r.*, a.to_age, a.from_age from tbl_ride as r INNER JOIN tbl_age as a on r.age_id = a.age_id where r.type='High Thriller';";
+                                    $q="select r.*, a.to_age, a.from_age from tbl_ride as r INNER JOIN tbl_age as a on r.age_id = a.age_id where r.type='High Thriller' order by r.ride_id desc;;";
                                     $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
                                     if(mysqli_num_rows($result)>0){
                                         while($r=mysqli_fetch_array($result)){

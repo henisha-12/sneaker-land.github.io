@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if (!isset( $_SESSION["email"])) {
+      die("");
+    }
 ?>
 
 <?php
@@ -11,7 +14,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Kapella Bootstrap Admin Dashboard Template</title>
+  <title>Sneaker Land - Admin</title>
   <!-- base:css -->
   <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../vendors/base/vendor.bundle.base.css">
@@ -19,10 +22,14 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="../../css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <link rel="icon" href="../../images/amusement-park.png" type="image/x-icon">
+
   
 </head>
 <script>
+  function logout(){
+    window.close();
+  }
 </script>
 <body>
   <div class="container-scroller">
@@ -37,10 +44,13 @@
             </div>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown  d-lg-flex d-none">
-              <a  href="../logout.php" target="_blank" onclick= "window.close();" class="btn btn-inverse-primary btn-sm">Log Out </a>
+              <a  href="../logout.php" target="_blank" onclick= "logout()" class="btn btn-inverse-primary btn-sm">Log Out </a>
                       </li>
+				<li class="nav-item dropdown  d-lg-flex d-none">
+				<a  href="../change_pass.php" class="btn btn-inverse-primary btn-sm">Change Password </a>
+                </li>
               <li class="nav-item nav-profile">
-                          <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                          <a class="nav-link" href="../edit_profile.php" data-bs-toggle="dropdown" id="profileDropdown">
                   <span class="nav-profile-name"><?php echo $_SESSION['email'] ?></span>
                   <span class="online-status"></span>
                             <img src="../../images/faces/face28.png" alt="profile"/>
@@ -135,8 +145,9 @@
                   <div class='card'>
                     <div class='row'>
                       <div class='card-body'>
-                        <h4 class='card-title'>Add Rides</h4>
+                        <h4 class='card-title'>Add Photo</h4>
                         <form action="" method="POST" enctype='multipart/form-data'>
+                        <span class="err" id="img_err">*</span>
                             <div class="hero">
                               <label for="input-file" id='drop-area'>
                                 <input type="file" accept="image/* ,video/*" name="img" id="input-file" hidden>
@@ -147,7 +158,7 @@
                                 </div>
                               </label>
                             </div>
-                          <input class='w-100 btn btn-inverse-primary btn-large btn-block ' name='add' id='add' type="submit" value="Add Ride">
+                          <input class='w-100 btn btn-inverse-primary btn-large btn-block ' name='add' id='add' type="submit" value="Upload">
                         </form>
                       </div>
                     </div>
@@ -165,22 +176,37 @@
 </html>
 <?php
         if (isset($_REQUEST['add'])) {
+          $img_err = "";
+              
           require("../../database/connect.php");
           $img_name=$_FILES['img']['name'];
           $tmp_loc=$_FILES['img']['tmp_name'];
-          $q = "insert into tbl_photos values(null,'$img_name','image')";
-          echo $q;
-            if(file_exists('../../images/Gallery/'.$img_name)){
-              echo "<h1>File Already Exist!!!</h1>";
+          
+          if($img_name == "") {
+            if($img_name == ""){
+              $img_err = "Please upload image";
+              echo "<script> document.querySelector('#img_err').innerHTML='$img_err'</script>";
             }
             else{
-              if (mysqli_query($mysql,$q)) {
-                echo "Inserted Successfully!!";
-                move_uploaded_file($tmp_loc,'../../images/Gallery/'.$img_name);
-                echo "<script type='text/javascript'>window.location.href='../Gallery.php'</script>";
+              $img_err = "*";
+              echo "<script> document.querySelector('#img_err').innerHTML='$img_err'</script>";
+            }
+          }
+          else{
+            $q = "insert into tbl_photos values(null,'$img_name')";
+            echo $q;
+              if(file_exists('../../images/Gallery/'.$img_name)){
+                echo "<h1>File Already Exist!!!</h1>";
               }
               else{
-                echo "<h1>Insertion Failed!!!</h1>";
+                if (mysqli_query($mysql,$q)) {
+                  echo "Inserted Successfully!!";
+                  move_uploaded_file($tmp_loc,'../../images/Gallery/'.$img_name);
+                  echo "<script type='text/javascript'>window.location.href='../Gallery.php'</script>";
+                }
+                else{
+                  echo "<h1>Insertion Failed!!!</h1>";
+                }
               }
             }
           }

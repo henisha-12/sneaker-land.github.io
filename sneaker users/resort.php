@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Restar-Amusment Park</title>
+    <title>Sneaker Land-Adventure Park</title>
 
     <!-- Fav Icon -->
     <link rel="icon" href="assets/images/amusement-park.png" type="image/x-icon">
@@ -26,6 +26,8 @@
     <link href="assets/css/responsive.css" rel="stylesheet">
 
 </head>
+
+
 
 <!-- page wrapper -->
 
@@ -76,13 +78,13 @@
         <!-- Page Title -->
         <section class="page-title">
             <div class="img-wrap parallax-demo-1">
-                <div class="parallax-inner back-img" style="background-image: url(assets/images/gallery/amusment/1920x500.jpg);"></div>
+                <div class="parallax-inner back-img" style="background-image: url(assets/images/gallery/ride/group-of-happy-best-friends-laughing-and-having-fun-at-amusement-park.jpg);"></div>
             </div>
             <div class="auto-container">
                 <div class="content-box">
                     <ul class="bread-crumb clearfix">
                         <li><a href="index.php">Home</a></li>
-                        <li>Resort</li>
+                        <li>Rooms</li>
                     </ul>
                     <div class="title">
                         <h1>Rooms</h1>
@@ -92,14 +94,13 @@
         </section>
         <!-- End Page Title -->
 
-        <!--themepark-section -->
         <section class="animals-section sec-pad">
             <div class="auto-container">
                 <div class="sec-title centred">
-                    <h2>amazing Rooms <br />in our Sneaker Adventure park</h2>
+                    <h2>Our exclusive <br />Rooms</h2>
                 </div>
                 <div class="tabs-box">
-                        <img class="arrow-left" src="assets\images\arrow_left.png" alt="">
+                        <!-- <img class="arrow-left" src="assets\images\arrow_left.png" alt=""> -->
                     <div class="tab-btn-box p_relative d_block mb_60 centred">
                         <div class="tab-btns tab-buttons centred">
                             <div class="row clearfix rd">
@@ -109,9 +110,9 @@
                                     $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
                                     if(mysqli_num_rows($result)>0){
                                         while($r=mysqli_fetch_array($result)){
-                                            $img = "http://localhost/main_project/sneaker%20land%20website/website/template/images/Rides/$r[5]";
+                                            $img = "http://localhost/main_project/sneaker%20land%20website/website/template/images/Resort/$r[5]";
                                             echo "<div class='col-lg-2 col-md-6 col-sm-12 single-column'>";
-                                                echo "<div class='single-item tab-btn' data-tab='#tab-$r[0]'>";
+                                                echo "<div class='single-item tab-btn' data-tab='#tab".$r[0]."'>";
                                                     echo "<div class='icon-box'><img src=$img alt=''></div>";
                                                     echo "<h5>$r[1]</h5>";
                                                 echo "</div>
@@ -121,37 +122,45 @@
                                 ?>
                             </div>
                         </div>
-                        <img class="arrow-right" src="assets\images\arrow_right.png" alt="">
+                        <!-- <img class="arrow-right" src="assets\images\arrow_right.png" alt=""> -->
                     </div>
-                                    <?php
-                                        require("connect.php");
-                                        $q="select * from tbl_resort;";
-                                        $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
-                                        if(mysqli_num_rows($result)>0){
-                                            while($r=mysqli_fetch_array($result)){
-                                                echo "<div class='tabs-content'>
-                                                        <div class='tab' id='tab-$r[0]'>
-                                                            <div class='inner-box'>
-                                                                <div class='row clearfix'>";
-                                                                echo "<div class='col-lg-6 col-md-6 col-sm-12 image-column ride'>
+                    <?php
+                            require("connect.php");
+                            $q="select * from tbl_resort";
+                            $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
+                            if(mysqli_num_rows($result)>0){
+                                while($r=mysqli_fetch_array($result)){
+                                    echo "<div class='tabs-content'>
+                                        <div class='tab' id='tab$r[0]'>
+                                            <div class='inner-box'>
+                                                <div class='row clearfix'>";
+                                        $img = "http://localhost/main_project/sneaker%20land%20website/website/template/images/Resort/$r[5]";
+                                                    echo "<div class='col-lg-6 col-md-6 col-sm-12 text-column'>";
+                                                        echo "<div class='text'>";
+                                                            echo "<h2>$r[1]</h2>";
+                                                            echo "<p>$r[2]";
+                                                            echo "</p>";
+                                                            echo "<p><b>No. of Rooms</b> : $r[4]";
+                                                            echo "<p><b>Price</b> : $r[3]";
+                                                    echo "</div>
+                                                    </div>";
+                                                echo "<div class='col-lg-6 col-md-6 col-sm-12 image-column ride'>
                                                     <figure class='video-box'>
                                                         <img src=$img>
                                                     </figure>
                                                 </div>";
-                                                $img = "http://localhost/main_project/sneaker%20land%20website/website/template/images/Rides/$r[5]";
-                                                            echo "<div class='col-lg-6 col-md-6 col-sm-12 text-column'>";
-                                                                echo "<div class='text'>";
-                                                                    echo "<h2>$r[1]</h2>";
-                                                                    echo "<p>$r[2]";
-                                                                    echo "</p>";
-                                                                    echo "<p><b>price</b> : $r[3]";
-                                                                    echo "<p><b>No. of rooms</b> : $r[4]";
-                                                echo "</div></div>";
-                                                
-                                                echo "</div>
-                                            </div>
-                                        </div>
+                                        echo "</div>
+                                        <button class='theme-btn' id='room$r[0]'>Select Room</button>
+
+                                        </div></div>
                                     </div>";
+                                    echo "<script>
+                                        $(function (){
+                                            $('#room$r[0]').bind('click', function () {
+                                                window.location.href= 'book_room.php?id=' + ".$r[0].";
+                                            });
+                                        });
+                                    </script>";
                                 }
                             }
                         ?>
@@ -159,10 +168,12 @@
                 </div>
             </div>
         </section>
-        <!-- themepark-section end -->
+
         <?php
             include "footer.php";
         ?>
+
+
 
         <!-- scroll to top -->
         <button class="scroll-top scroll-to-target" data-target="html">

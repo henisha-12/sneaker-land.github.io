@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Restar-Amusment Park</title>
+    <title>Sneaker Land-Adventure Park</title>
 
     <!-- Fav Icon -->
     <link rel="icon" href="assets/images/amusement-park.png" type="image/x-icon">
@@ -123,6 +123,14 @@
         </section>
         <!-- google-map-section end -->
 
+        <?php
+            if(isset($_SESSION["email"])){
+                echo "<style>.contact-section{display:block}</style>";
+            }
+            else{
+                echo "<style>.contact-section{display:none}</style>";                
+            }
+        ?>
 
         <!-- contact-section -->
         <section class="contact-section centred">
@@ -133,19 +141,10 @@
                             <h2>have question? <br />drop a line</h2>
                         </div>
                         <div class="form-inner">
-                            <form method="post" action="https://azim.commonsupport.com/Weldlfe/sendemail.php" id="contact-form" class="default-form" novalidate="novalidate">
+                            <form method="post" id="contact-form" class="default-form" novalidate="novalidate">
                                 <div class="row clearfix">
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        <input type="text" name="username" placeholder="Full name" required="" aria-required="true">
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        <input type="email" name="email" placeholder="Email address" required="" aria-required="true">
-                                    </div>
-                                    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                        <input type="text" name="phone" required="" placeholder="Phone" aria-required="true">
-                                    </div>
-                                    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                        <input type="text" name="subject" required="" placeholder="Subject" aria-required="true">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                        <input type="email" name="email" placeholder="Email address" value="<?php echo $_SESSION['email'] ?>" readonly required="" aria-required="true">
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                         <textarea name="message" placeholder="Write a message"></textarea>
@@ -196,3 +195,31 @@
 <!-- Mirrored from azim.commonsupport.com/Weldlfe/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 11 Jan 2024 07:05:16 GMT -->
 
 </html>
+
+
+<?php
+    if(isset($_REQUEST["submit-form"])){
+        $eml = $_REQUEST["email"];
+        $msg = $_REQUEST["message"];
+
+        require("connect.php");
+        $q1 = "select * from tbl_usr where email_id='$eml'";
+        $result=mysqli_query($mysql,$q1) or die("Query Failed!!!".mysqli_error($mysql));
+        if(mysqli_num_rows($result)>0){
+            while($r=mysqli_fetch_array($result)){
+                $id = $r[0];
+            }
+        }
+        $q = "insert into tbl_review values(null,'$msg','$id')";
+
+        // $q= "insert into tbl_review values (null,$msg,'$eml')";
+
+        if(mysqli_query($mysql,$q)){
+            // echo "Inserted Successfully";
+            echo "<script>window.location.href = 'contact.php' </script>";
+        }
+        else{
+            echo "<script>alert('Feedback Not Sended')</script>";
+        }
+    }
+?>

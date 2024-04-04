@@ -1,6 +1,8 @@
 <?php
     session_start();
-    
+    if (!isset( $_SESSION["email"])) {
+      die("");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +12,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Kapella Bootstrap Admin Dashboard Template</title>
+  <title>Sneaker Land - Admin</title>
   <!-- base:css -->
   <link rel="stylesheet" href="../vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../vendors/base/vendor.bundle.base.css">
@@ -18,14 +20,13 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="../css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="../images/favicon.png" />
+  <link rel="icon" href="../images/amusement-park.png" type="image/x-icon">
   
 </head>
 <script>
-function ConfirmDelete()
-{
-  return confirm("Are you sure you want to delete?");
-}
+  function logout(){
+    window.close();
+  }
 </script>
 <body>
   <div class="container-scroller">
@@ -40,10 +41,13 @@ function ConfirmDelete()
             </div>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown  d-lg-flex d-none">
-              <a  href="logout.php" target="_blank" onclick= "window.close();" class="btn btn-inverse-primary btn-sm">Log Out </a>
+              <a  href="logout.php" target="_blank" onclick= "logout()" class="btn btn-inverse-primary btn-sm">Log Out </a>
                       </li>
+				<li class="nav-item dropdown  d-lg-flex d-none">
+				<a  href="change_pass.php" class="btn btn-inverse-primary btn-sm">Change Password </a>
+                </li>
               <li class="nav-item nav-profile">
-                          <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                          <a class="nav-link" href="edit_profile.php" data-bs-toggle="dropdown" id="profileDropdown">
                   <span class="nav-profile-name"><?php echo $_SESSION['email'] ?></span>
                   <span class="online-status"></span>
                             <img src="../images/faces/face28.png" alt="profile"/>
@@ -135,7 +139,7 @@ function ConfirmDelete()
             <div class="content-wrapper">       
         <?php
           require("../database/connect.php");
-          $q="select r.*, a.to_age, a.from_age from tbl_ride as r INNER JOIN tbl_age as a on r.age_id = a.age_id;";
+          $q="select b.*,e.* from tbl_bookevent as b INNER JOIN tbl_event as e where b.event_id=e.e_id order by eb_id desc";
           $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
           if(mysqli_num_rows($result)>0){
             echo "<div class='row'>
@@ -143,42 +147,47 @@ function ConfirmDelete()
               <div class='card'>
                 <div class='row'>
                   <div class='card-body'>
-                    <h4 class='card-title'>Rides</h4>
+                    <h4 class='card-title'>Event-Bookings</h4>
                     <div class='table-responsive'>
                       <table class='table table-hover'>
                         <thead>
-                          <tr>
-                            <th>Ride</th>
+                          <tr>                    
+                            <th>Event Name</th>
+                            <th>Email</th>
                             <th>Name</th>
-                            <th>Capacity</th>
-                            <th>Location</th>
-                            <th>Information</th>
-                            <th>Type</th>
-                            <th>Minimum Age</th>
-                            <th>Maximum Age</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Adult Qty</th>
+                            <th>Event Price</th>
+                            <th>Total</th>
                           </tr>
                         </thead>";
                         while($r=mysqli_fetch_array($result)){
+                          $img = "../images/Events/$r[5]";
+                          $total = $r[1]*$r[11];
                           echo "<tbody>
                             <tr>
-                              <td><img src='../images/Rides/roler_coaster.jpg' style='width:100px !important;height: 100px !important;border-radius:0% !important' alt=$r[2]></td>
-                              <td>$r[2]</td>
-                              <td class='ext-danger'>$r[3]</td>
-                              <td>$r[4]</td>
-                              <td>$r[5]</td>
                               <td>$r[6]</td>
-                              <td>$r[7]</td>
-                              <td>$r[8]</td>
-                              <td><a class='btn btn-inverse-primary btn-sm' href='Edit_Ride.php?ride_id=$r[0]'><i class='mdi mdi-pencil-circle-outline mdi-24px'></i></td>
-                              <td><a class='btn btn-inverse-primary btn-sm' onclick='ConfirmDelete()' href='Delete_Ride.php?ride_id=$r[0]'><i class='mdi mdi-delete-empty mdi-24px'></td>
+                              <td>$r[3]</td>
+                              <td>$r[4]</td>
+                              <td>$r[1]</td>
+                              <td>$r[11]</td>
+                              <td>$total</td>
                             </tr>
                           </tbody>";
                         }
                         echo "</table>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>";
+          }
+          else{
+            echo "<div class='col-12 m-1 grid-margin'>
+              <div class='card'>
+                <div class='row'>
+                  <div class='card-body'>
+                    <h1 style='text-align:center; text-shadow:-2px 2px 4px black;'>No Events Are Available Now!!!</h1>
                   </div>
                 </div>
               </div>

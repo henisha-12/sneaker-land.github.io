@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Sneaker Land - adventure Park</title>
+    <title>Sneaker Land-Adventure Park</title>
 
     <!-- Fav Icon -->
     <link rel="icon" href="assets/images/amusement-park.png" type="image/x-icon">
@@ -130,22 +130,22 @@
                         <div class="col-lg-4 col-md-6 col-sm-12 single-column">
                             <div class="single-item">
                                 <div class="icon-box"><i class="flaticon-ticket"></i></div>
-                                <h5><a href="pricing.php">Buy Tickets</a></h5>
-                                <p>Experience the joy and excitement at Restar Amusement Park by grabbing your tickets online!</p>
+                                <h5><a href="package.php">Buy Tickets</a></h5>
+                                <p>Experience the joy and excitement at Sneaker Land - Adventure Park by grabbing your tickets online!</p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 single-column">
                             <div class="single-item">
                                 <div class="icon-box"><i class="flaticon-calendar"></i></div>
-                                <h5 ><a href="roombook.php">book room</a></h5>
-                                <p>Join us at Restar Amusement Park for an adventure-packed season of fun and discovery.</p>
+                                <h5 ><a href="resort.php">book room</a></h5>
+                                <p>Join us at Sneaker Land - Adventure Park for an adventure-packed season of fun and discovery.</p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 single-column">
                             <div class="single-item">
                                 <div class="icon-box"><i class="flaticon-map"></i></div>
                                 <h5><a href="https://www.google.com/maps/place/Cbeebies+Land/@52.9894969,-1.8997091,16z/data=!4m6!3m5!1s0x487a1661bdd959f9:0xff3577076fa1638e!8m2!3d52.9895409!4d-1.894326!16s%2Fg%2F11b6g7rhym?entry=ttu">Park map</a></h5>
-                                <p>Embark on a journey of discovery with the Restar Amusement Park interactive park map!</p>
+                                <p>Embark on a journey of discovery with the Sneaker Land - Adventure Park interactive park map!</p>
                             </div>
                         </div>
                     </div>
@@ -174,16 +174,16 @@
                                     <h2>welcome to best Adventure Park</h2>
                                 </div>
                                 <div class="text">
-                                    <h4>Help us to protect Restar around the world.</h4>
-                                    <p> Welcome to Restar Amusement Park, where every moment is a journey into joy and excitement!</p>
+                                    <h4>Help us to introduce Sneaker Land around the world.</h4>
+                                    <p> Welcome to Sneaker Land - Adventure Park, where every moment is a journey into joy and excitement!</p>
                                     <ul class="list-style-one clearfix">
                                         <li> Captivating Entertainment</li>
                                         <li>Exceptional Guest Service</li>
-                                        <li> Restar Amusement Park is designed for families to create lasting memories together.</li>
+                                        <li> Sneaker Land - Adventure Park is designed for families to create lasting memories together.</li>
                                     </ul>
                                 </div>
                                 <div class="btn-box">
-                                    <a href="pricing.php" class="theme-btn btn-one">Book ticket</a>
+                                    <a href="package.php" class="theme-btn btn-one">Book ticket</a>
                                 </div>
                             </div>
                         </div>
@@ -231,15 +231,15 @@
                                 <span>Resort/Roooms</span>
                             </div>
                             </a>
-                            <a href="package.php.php">
+                            <a href="package.php">
                             <div class="img_container">
-                                <img src="img6.png" alt="">                             
+                                <img src="assets\images\gallery\ride\chair-swinger.jpg" alt="">                             
                                 <span>Packages</span>
                             </div>
                             </a>
-                            <a href="event.php">
+                            <a href="all_event.php">
                             <div class="img_container last">
-                                <img src="img7.png" alt="">                             
+                                <img src="assets\images\gallery\ride\chair-swinger.jpg" alt="">                             
                                 <span>Events</span>
                             </div>
                             </a>
@@ -268,13 +268,13 @@
                                 <div class="inner-box">
                                     <div class="single-item">
                                         <div class="icon-box"><i class="flaticon-tick"></i></div>
-                                        <h4>night at the Amusment Park</h4>
-                                        <p>As the sun sets, the magic of Restar Amusement Park comes alive in a whole new light! Join us for an extraordinary "Night at the Amusement Park" where the thrills continue under the stars.</p>
+                                        <h4>night at the adventure Park</h4>
+                                        <p>As the sun sets, the magic of Sneaker Land - Adventure Park comes alive in a whole new light! Join us for an extraordinary "Night at the Adventure Park" where the thrills continue under the stars.</p>
                                     </div>
                                     <div class="single-item">
                                         <div class="icon-box"><i class="flaticon-tick"></i></div>
                                         <h4>Good Support from our team</h4>
-                                        <p>At Restar Amusement Park, your joy and satisfaction are our top priorities. Our dedicated team is committed to ensuring you have the best experience, from the moment you plan your visit to the time you bid farewell with a heart full of cherished memories.</p>
+                                        <p>At Sneaker Land - Adventure Park, your joy and satisfaction are our top priorities. Our dedicated team is committed to ensuring you have the best experience, from the moment you plan your visit to the time you bid farewell with a heart full of cherished memories.</p>
                                     </div>
                                 </div>
                             </div>
@@ -293,58 +293,63 @@
             </div>
         </section>
 
+        
+        <?php
+            include "connect.php";
+            $q= "select * from tbl_review";
+            $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
+            if(mysqli_num_rows($result)>0){
+                echo "<style>.testimonial-section .auto-container{display:block;}</style>";
+            }
+            else{
+                echo "<style>.testimonial-section .auto-container{display:none;}</style>";
+            }
+        ?>
+
                 <section class="testimonial-section centred sec-pad">
             <div class="auto-container">
                 <div class="sec-title centred">
                     <h2>What they’re <br />saying?</h2>
                 </div>
                 <div class="three-item-carousel owl-carousel owl-theme owl-dots-none owl-nav-none">
-                    <div class="testimonil-block-one">
-                        <div class="inner-box">
-                            <div class="author-thumb">
-                                <div class="quote"><i class="flaticon-quote"></i></div>
+                <?php
+                    include "connect.php";
+                    $q="select r.*,u.unm from tbl_review as r INNER JOIN tbl_usr as u where r.email_id=u.id order by r_id desc";
+                    $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
+                    if(mysqli_num_rows($result)>0){
+                        while($r=mysqli_fetch_array($result)){
+                            echo "<div class='testimonil-block-one'>
+                            <div class='inner-box'>
+                                <div class='author-thumb'>
+                                    <div class='quote'><i class='flaticon-quote'></i></div>
+                                </div>
+                                <div class='text'>
+                                    <p><i class='flaticon-star'></i>⭐⭐⭐⭐ <br>'$r[1]'</p>
+                                </div>
+                                <div class='author-info'>
+                                    <h5>$r[3]</h5>
+                                    <span class='designation'>Customer</span>
+                                </div>
                             </div>
-                            <div class="text">
-                                <p>⭐⭐⭐⭐ <br>"A day filled with laughter and adventure! Restar Amusement Park exceeded our expectations with its thrilling rides and vibrant atmosphere."</p>
-                            </div>
-                            <div class="author-info">
-                                <h5>Christine Rose</h5>
-                                <span class="designation">Customer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonil-block-one">
-                        <div class="inner-box">
-                            <div class="author-thumb">
-                                <div class="quote"><i class="flaticon-quote"></i></div>
-                            </div>
-                            <div class="text">
-                                <p>⭐⭐⭐ <br>"Fantastic variety of attractions! From heart-pounding roller coasters to enchanting family rides, there's something for everyone."</p>
-                            </div>
-                            <div class="author-info">
-                                <h5>Mike hardson</h5>
-                                <span class="designation">Customer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonil-block-one">
-                        <div class="inner-box">
-                            <div class="author-thumb">
-                                <div class="quote"><i class="flaticon-quote"></i></div>
-                            </div>
-                            <div class="text">
-                                <p>⭐⭐⭐⭐⭐ <br>"Captivating shows and entertainment! The live performances at Restar Amusement Park are nothing short of <br>spectacular.</p>
-                            </div>
-                            <div class="author-info">
-                                <h5>sarah albert</h5>
-                                <span class="designation">Customer</span>
-                            </div>
-                        </div>
-                    </div>
+                        </div>";
+                        }
+                    }
+                ?>
                 </div>
             </div>
         </section>
 
+        <?php
+            include "connect.php";
+            $q= "select * from tbl_event";
+            $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
+            if(mysqli_num_rows($result)>0){
+                echo "<style>.events-section{display:block;}</style>";
+            }
+            else{
+                echo "<style>.events-section{display:none;}</style>";
+            }
+        ?>
         <section class="events-section sec-pad">
             <div class="bg-layer"></div>
             <div class="bg-image"
@@ -356,50 +361,45 @@
                     <div class="col-lg-6 col-md-12 col-sm-12 title-column">
                         <div class="sec-title light">
                             <h2>Check Park upcoming events</h2>
-                            <a href="pricing.php" class="theme-btn btn-one">Book Your Ticket Now</a>
+                            <a href="all_event.php" class="theme-btn btn-one">Book Your Event Now</a>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 inner-column">
                         <div class="inner-content">
-                            <div class="events-block-one">
-                                <div class="inner-box">
-                                    <div class="image-box">
-                                        <figure class="image"><img
-                                                src="assets/images/gallery/aquarium/clown-fish-e1628655075684.jpg"
-                                                alt=""></figure>
-                                        <div class="post-date">
-                                            <h6>16<span>dec</span></h6>
+                            <?php
+                                include "connect.php";
+                                $q= "select * from tbl_event";
+                                $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
+                                if(mysqli_num_rows($result)>0){
+                                    while($r=mysqli_fetch_array($result)){
+                                        echo "<div class='events-block-one'>
+                                        <div class='inner-box'>
+                                            <div class='image-box'>
+                                                <figure class='image'>";
+                                                $img = "http://localhost/main_project/sneaker%20land%20website/website/template/images/Events/$r[5]";
+                                                    echo "<img src=$img alt=''>
+                                                </figure>
+                                                <div class='post-date'>";
+                                                    $dt = date($r[2]);
+
+                                                    $day = date('d',strtotime(($dt)));
+                                                    $mon = date('F',strtotime(($dt)));
+                                                    echo "<h6>$day<span>$mon</span></h6>
+                                                </div>
+                                            </div>
+                                            <div class='inner'>
+                                                <ul class='info clearfix'>
+                                                    <li><i class='far fa-clock'></i>$r[2] to $r[3]</li>
+                                                </ul>
+                                                <h3><a href='event.php?eid=$r[0]'>$r[1]</a></h3>
+                                                <p><b style='color:#000'>Price :</b></p>
+                                                <p>$r[6]</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="inner">
-                                        <ul class="info clearfix">
-                                            <li><i class="far fa-clock"></i>2:00 am</li>
-                                            <li><i class="far fa-map"></i>60 broklyn street</li>
-                                        </ul>
-                                        <h3><a href="index.php">clown fish's super show</a></h3>
-                                        <p>Dive into the enchanting world of the Clown Fish Super Show, a captivating spectacle that awaits you at our amusement park!</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="events-block-one">
-                                <div class="inner-box">
-                                    <div class="image-box">
-                                        <figure class="image"><img src="assets/images/resource/events-2.jpg" alt="">
-                                        </figure>
-                                        <div class="post-date">
-                                            <h6>05<span>dec</span></h6>
-                                        </div>
-                                    </div>
-                                    <div class="inner">
-                                        <ul class="info clearfix">
-                                            <li><i class="far fa-clock"></i>2:00 am</li>
-                                            <li><i class="far fa-map"></i>60 broklyn street</li>
-                                        </ul>
-                                        <h3><a href="index.php">how Interaction with Animal can</a></h3>
-                                        <p>At our park, visitors of all ages can experience the thrill of connecting with a variety of fascinating creatures.</p>
-                                    </div>
-                                </div>
-                            </div>
+                                    </div>";
+                                    }
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>

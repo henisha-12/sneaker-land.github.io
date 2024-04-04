@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset( $_SESSION["email"])) {
+  die("");
+}
 
   $gid = $_GET['g_id'];
   require('../../database/connect.php');
@@ -25,6 +28,11 @@ session_start();
   <link rel="shortcut icon" href="../../images/favicon.png" />
   
 </head>
+<script>
+  function logout(){
+    window.close();
+  }
+</script>
 <body>
   <div class="container-scroller">
     <!-- partial:../../partials/_horizontal-navbar.html -->
@@ -38,8 +46,11 @@ session_start();
             </div>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown  d-lg-flex d-none">
-              <a  href="../logout.php" target="_blank" onclick= "window.close();" class="btn btn-inverse-primary btn-sm">Log Out </a>
+              <a  href="../logout.php" target="_blank" onclick= "logout()" class="btn btn-inverse-primary btn-sm">Log Out </a>
                       </li>
+				<li class="nav-item dropdown  d-lg-flex d-none">
+				<a  href="" class="btn btn-inverse-primary btn-sm">Change Password </a>
+                </li>
               <li class="nav-item nav-profile">
                           <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                   <span class="nav-profile-name"><?php echo $_SESSION['email'] ?></span>
@@ -140,11 +151,11 @@ session_start();
                         <form action="" method="POST" enctype='multipart/form-data'>
                           <div class="hero">
                               <label for="input-file" id='drop-area'>
-                                <input type="file" accept="image/*" name="img" id="input-file" hidden>
+                                <input type="file" accept="image/*,video/*" name="img" id="input-file" hidden>
                                 <div id="img-view" class='' style="background-image:url('<?php echo "../../images/Gallery/$r[1] "; ?>')"></div>
                               </label>
                             </div>
-                          <input class='w-100 btn btn-inverse-primary btn-large btn-block' name="updt" id="updt" type="submit" value="Edit Event">
+                          <input class='w-100 btn btn-inverse-primary btn-large btn-block' name="updt" id="updt" type="submit" value="Edit Image">
                         </form>
                       </div>
                     </div>

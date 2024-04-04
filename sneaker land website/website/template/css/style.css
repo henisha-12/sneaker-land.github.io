@@ -9085,6 +9085,16 @@ legend + * {
   -webkit-appearance: textfield;
 }
 
+
+a.canvasjs-chart-credit {
+  display: none;
+}
+
+.col_50 {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+}
+
 /* rtl:raw:
 [type="tel"],
 [type="url"],
@@ -20542,6 +20552,11 @@ code {
   }
 }
 
+.err{
+  color:red;
+  float: right;
+}
+
 .pro-banner .pro-banner-bg {
   background: linear-gradient(230deg, #7A3EC8, #297FC8);
 }
@@ -21550,11 +21565,12 @@ code {
 #img-view{
   width: 100%;
   height: 300px;
+  background-repeat: no-repeat !important;
   border-radius: 20px;
   border: 2px dashed #bbb5ff;
   background: #f7f8ff;
-  background-position: center;
-  background-size: cover;
+  background-position: center !important;
+  background-size: cover !important;
 }
 
 #img-view .img {
@@ -21562,7 +21578,7 @@ code {
   height: 200px;
   margin-top: 10px;
 }
-#img-view img{
+#img-view img,#img-view video{
   width: 100%;
   height: 295px;
   border-radius: 20px;

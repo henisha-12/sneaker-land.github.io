@@ -1,8 +1,9 @@
 <?php
     session_start();
+	if (!isset( $_SESSION["email"])) {
+		die("");
+	}
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +11,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Kapella Bootstrap Admin Dashboard Template</title>
+    <title>Sneaker Land - Admin</title>
     <!-- base:css -->
     <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="vendors/base/vendor.bundle.base.css">
@@ -20,7 +21,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="images/favicon.png" />
+	<link rel="icon" href="images/amusement-park.png" type="image/x-icon">
   </head>
   <body>
 		<!-- partial:partials/_horizontal-navbar.html -->
@@ -36,8 +37,12 @@
 				<li class="nav-item dropdown  d-lg-flex d-none">
 				<a  href="pages/logout.php" target="_blank" onclick= '<?php echo "<script>window.close()</script>";?>' class="btn btn-inverse-primary btn-sm">Log Out </a>
                 </li>
+				<li class="nav-item dropdown  d-lg-flex d-none">
+				<a  href="pages/change_pass.php" class="btn btn-inverse-primary btn-sm">Change Password </a>
+                </li>
+				
 				<li class="nav-item nav-profile">
-                  	<a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                  	<a class="nav-link" href="pages/edit_profile.php" id="profileDropdown">
 						<span class="nav-profile-name"><?php echo $_SESSION['email'] ?></span>
 						<span class="online-status"></span>
                     	<img src="images/faces/face28.png" alt="profile"/>
@@ -115,8 +120,8 @@
 					<div class="submenu">
 						<ul>
 							<li class="nav-item"><a class="nav-link" href="pages/Package_book.php">Package</a></li>
-							<li class="nav-item"><a class="nav-link" href="pages/ui-features/typography.php">Resort</a></li>
-							<li class="nav-item"><a class="nav-link" href="pages/ui-features/typography.php">Event</a></li>
+							<li class="nav-item"><a class="nav-link" href="pages/Resort_book.php">Resort</a></li>
+							<li class="nav-item"><a class="nav-link" href="pages/Event_book.php">Event</a></li>
 						</ul>
 					</div>
               </li>
@@ -142,56 +147,8 @@
 							<div class="card">
 								<div class="card-body">
 									<div class="row">
-										<div class="col-lg-4">
-											<h4 class="card-title">Monthly Report</h4>
-											<canvas id="salesDifference"></canvas>
-											<p class="mt-3 mb-4 mb-lg-0">Lorem ipsum dolor sit amet,
-												consectetur adipisicing elit.
-											</p>
-										</div>
-										<div class="col-lg-5">
-											<h4 class="card-title">Age Report</h4>
-											<div class="row">
-												<div class="col-sm-4">
-													<ul class="graphl-legend-rectangle">
-														<li><span class="bg-danger"></span>5 - 10</li>
-														<li><span class="bg-warning"></span>10 - 18</li>
-														<li><span class="bg-info"></span>18 - 40</li>
-														<li><span class="bg-success"></span>40 - 60</li>
-													</ul>
-												</div>
-												<div class="col-sm-8 grid-margin">
-													<canvas id="bestSellers"></canvas>
-												</div>
-											</div>
-											<p class="mt-3 mb-4 mb-lg-0">Lorem ipsum dolor sit amet,
-												consectetur adipisicing elit.
-											</p>
-										</div>
-										<div class="col-lg-3">
-											<h4 class="card-title">City Report</h4>
-											<div class="row">
-												<div class="col-sm-12">
-													<div class="progress progress-lg grouped mb-2">
-														<div class="progress-bar  bg-danger" role="progressbar" style="width: 40%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-														<div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-														<div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-														<div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-												</div>
-												<div class="col-sm-12">
-													<ul class="graphl-legend-rectangle">
-														<li><span class="bg-danger"></span>Instagram (15%)</li>
-														<li><span class="bg-warning"></span>Facebook (20%)</li>
-														<li><span class="bg-info"></span>Website (25%)</li>
-														<li><span class="bg-success"></span>Youtube (40%)</li>
-													</ul>
-												</div>
-											</div>
-											<p class="mb-0 mt-2">Lorem ipsum dolor sit amet,
-												consectetur adipisicing elit.
-											</p>
-										</div>
+										<?php include("pages/chart.php");?>
+										
 									</div>
 								</div>
 							</div>
@@ -201,7 +158,17 @@
 								<div class="card-body pb-0">
 									<img src="images/dashboard/face29.png" alt="">  
 									<h2 class="mt-3 text-white mb-3 font-weight-bold">Congratulation</h2>
-									<p>119K People visit your adventure park today!!.
+									<p>
+									<?php 
+										require("database/connect.php");
+										$q = "select count(*) from tbl_usr where type='user'";
+										if($result = mysqli_query($mysql,$q)){
+											while($r = mysqli_fetch_array($result)){
+												echo "$r[0]";
+											}
+										}
+									?>	
+									119K People visit your adventure park today!!.
 										Keep More Pattionate!!. 
 									</p>
 								</div>
@@ -321,6 +288,7 @@
 					</div>
 					<div class="row">
 						<div class="col-lg-2 grid-margin stretch-card">
+							<a href="pages/users.php" style="text-decoration:none;width:100%">
 							<div class="card">
 								<div class="card-body pb-0">
 									<div class="d-flex align-items-center justify-content-between">
@@ -342,8 +310,10 @@
 								<canvas id="newClient"></canvas>
 								<div class="line-chart-row-title">USERS</div>
 							</div>
+							</a>
 						</div>
 						<div class="col-lg-2 grid-margin stretch-card">
+							<a href="pages/Rides.php" style="text-decoration:none;width:100%">
 							<div class="card">
 								<div class="card-body pb-0">
 									<div class="d-flex align-items-center justify-content-between">
@@ -365,8 +335,10 @@
 								<canvas id="allProducts"></canvas>
 								<div class="line-chart-row-title">All Rides</div>
 							</div>
+							</a>
 						</div>
 						<div class="col-lg-2 grid-margin stretch-card">
+							<a href="pages/Package.php" style="text-decoration:none;width:100%">
 							<div class="card">
 								<div class="card-body pb-0">
 									<div class="d-flex align-items-center justify-content-between">
@@ -388,8 +360,10 @@
 								<canvas id="invoices"></canvas>
 								<div class="line-chart-row-title">PACKAGES</div>
 							</div>
+							</a>
 						</div>
 						<div class="col-lg-2 grid-margin stretch-card">
+							<a href="pages/Event.php" style="text-decoration:none;width:100%">
 							<div class="card">
 								<div class="card-body pb-0">
 									<div class="d-flex align-items-center justify-content-between">
@@ -411,8 +385,10 @@
 								<canvas id="projects"></canvas>
 								<div class="line-chart-row-title">EVENTS</div>
 							</div>
+							</a>
 						</div>
 						<div class="col-lg-2 grid-margin stretch-card">
+							<a href="pages/Resort.php" style="text-decoration:none;width:100%">
 							<div class="card">
 								<div class="card-body pb-0">
 									<div class="d-flex align-items-center justify-content-between">
@@ -434,8 +410,10 @@
 								<canvas id="orderRecieved"></canvas>
 								<div class="line-chart-row-title">RESORTS</div>
 							</div>
+							</a>
 						</div>
 						<div class="col-lg-2 grid-margin stretch-card">
+							<a href="pages/Reviews.php" style="text-decoration:none;width:100%">
 							<div class="card">
 								<div class="card-body pb-0">
 									<div class="d-flex align-items-center justify-content-between">
@@ -457,6 +435,7 @@
 								<canvas id="transactions"></canvas>
 								<div class="line-chart-row-title">Review</div>
 							</div>
+							</a>
 						</div>
 					</div>
 				</div>

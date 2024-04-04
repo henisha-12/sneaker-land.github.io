@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Restar-Amusment Park</title>
+    <title>Sneaker Land-Adventure Park</title>
 
     <!-- Fav Icon -->
     <link rel="icon" href="assets/images/amusement-park.png" type="image/x-icon">
@@ -115,7 +115,7 @@
 
                                 </div>
                                 <div class="btn-box">
-                                    <a href="pricing.php" class="theme-btn btn-one">Book Your Ticket</a>
+                                    <a href="package.php" class="theme-btn btn-one">Book Your Ticket</a>
                                 </div>
                             </div>
                         </div>
@@ -126,59 +126,50 @@
         <!-- about-style-three end -->
 
 
+        
+        <?php
+            include "connect.php";
+            $q= "select * from tbl_review";
+            $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
+            if(mysqli_num_rows($result)>0){
+                echo "<style>.testimonial-section .auto-container{display:block;}</style>";
+            }
+            else{
+                echo "<style>.testimonial-section .auto-container{display:none;}</style>";
+            }
+        ?>
+
+
         <!-- testimonial-section -->
-        <section class="testimonial-section centred sec-pad bg-color-1">
-            <div class="pattern-layer" style="background-image: url(assets/images/shape/shape-6.png);"></div>
+        <section class="testimonial-section centred sec-pad">
             <div class="auto-container">
                 <div class="sec-title centred">
                     <h2>What they’re <br />saying?</h2>
                 </div>
                 <div class="three-item-carousel owl-carousel owl-theme owl-dots-none owl-nav-none">
-                    <div class="testimonil-block-one">
-                        <div class="inner-box">
-                            <div class="author-thumb">
-                                <figure class="thumb-box"><img src="assets/images/resource/testimonial-1.jpg" alt=""></figure>
-                                <div class="quote"><i class="flaticon-quote"></i></div>
+                <?php
+                    include "connect.php";
+                    $q="select r.*,u.email_id from tbl_review as r INNER JOIN tbl_usr as u where r.email_id=u.id order by r_id desc";
+                    $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
+                    if(mysqli_num_rows($result)>0){
+                        while($r=mysqli_fetch_array($result)){
+                            echo "<div class='testimonil-block-one'>
+                            <div class='inner-box'>
+                                <div class='author-thumb'>
+                                    <div class='quote'><i class='flaticon-quote'></i></div>
+                                </div>
+                                <div class='text'>
+                                    <p>⭐⭐⭐⭐ <br>'$r[1]'</p>
+                                </div>
+                                <div class='author-info'>
+                                    <h5>$r[3]</h5>
+                                    <span class='designation'>Customer</span>
+                                </div>
                             </div>
-                            <div class="text">
-                                <p>⭐⭐⭐⭐ <br>"A day filled with laughter and adventure! Restar Amusement Park exceeded our expectations with its thrilling rides and vibrant atmosphere."</p>
-                            </div>
-                            <div class="author-info">
-                                <h5>Christine Rose</h5>
-                                <span class="designation">Customer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonil-block-one">
-                        <div class="inner-box">
-                            <div class="author-thumb">
-                                <figure class="thumb-box"><img src="assets/images/resource/testimonial-2.jpg" alt=""></figure>
-                                <div class="quote"><i class="flaticon-quote"></i></div>
-                            </div>
-                            <div class="text">
-                                <p>⭐⭐⭐ <br>"Fantastic variety of attractions! From heart-pounding roller coasters to enchanting family rides, there's something for everyone."</p>
-                            </div>
-                            <div class="author-info">
-                                <h5>Mike hardson</h5>
-                                <span class="designation">Customer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonil-block-one">
-                        <div class="inner-box">
-                            <div class="author-thumb">
-                                <figure class="thumb-box"><img src="assets/images/resource/testimonial-3.jpg" alt=""></figure>
-                                <div class="quote"><i class="flaticon-quote"></i></div>
-                            </div>
-                            <div class="text">
-                                <p>⭐⭐⭐⭐⭐ <br>"Captivating shows and entertainment! The live performances at Restar Amusement Park are nothing short of <br>spectacular.</p>
-                            </div>
-                            <div class="author-info">
-                                <h5>sarah albert</h5>
-                                <span class="designation">Customer</span>
-                            </div>
-                        </div>
-                    </div>
+                        </div>";
+                        }
+                    }
+                ?>
                 </div>
             </div>
         </section>

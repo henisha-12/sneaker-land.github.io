@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+if (!isset( $_SESSION["email"])) {
+  die("");
+}
   $rid = $_GET['r_id'];
   require('../../database/connect.php');
   $q="Select * from tbl_resort where r_id=$rid";
@@ -26,10 +29,9 @@ session_start();
   
 </head>
 <script>
-function ConfirmDelete()
-{
-  return confirm("Are you sure you want to delete?");
-}
+  function logout(){
+    window.close();
+  }
 </script>
 <body>
   <div class="container-scroller">
@@ -44,8 +46,11 @@ function ConfirmDelete()
             </div>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown  d-lg-flex d-none">
-              <a  href="../logout.php" target="_blank" onclick= "window.close();" class="btn btn-inverse-primary btn-sm">Log Out </a>
+              <a  href="../logout.php" target="_blank" onclick= "logout()" class="btn btn-inverse-primary btn-sm">Log Out </a>
                       </li>
+				<li class="nav-item dropdown  d-lg-flex d-none">
+				<a  href="" class="btn btn-inverse-primary btn-sm">Change Password </a>
+                </li>
               <li class="nav-item nav-profile">
                           <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                   <span class="nav-profile-name"><?php echo $_SESSION['email'] ?></span>
@@ -75,14 +80,14 @@ function ConfirmDelete()
                     <span class="menu-title">Rides</span>
                   </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                   <a href="../Resort.php" class="nav-link">
                     <i class="mdi mdi-church menu-icon"></i>
                     <span class="menu-title">Resort</span>
                     <i class="menu-arrow"></i>
                   </a>
               </li>
-              <li class="nav-item active">
+              <li class="nav-item">
                   <a href="../Event.php" class="nav-link">
                     <i class="mdi mdi-airballoon menu-icon"></i>
                     <span class="menu-title">Event</span>
@@ -155,11 +160,11 @@ function ConfirmDelete()
                           <div class="hero">
                               <label for="input-file" id='drop-area'>
                                 <input type="file" accept="image/*" name="img" id="input-file" hidden>
-                                <div id="img-view" class='' style="background-image:url('<?php echo "../../images/Events/$r[5] "; ?>')"></div>
+                                <div id="img-view" class='' style="background-image:url('<?php echo "../../images/Resort/$r[5] "; ?>')"></div>
                                   
                               </label>
                             </div>
-                          <input class='w-100 btn btn-inverse-primary btn-large btn-block' name="updt" id="updt" type="submit" value="Edit Event">
+                          <input class='w-100 btn btn-inverse-primary btn-large btn-block' name="updt" id="updt" type="submit" value="Edit Room">
                         </form>
                       </div>
                     </div>

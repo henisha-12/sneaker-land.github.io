@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if (!isset( $_SESSION["email"])) {
+      die("");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +12,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Kapella Bootstrap Admin Dashboard Template</title>
+  <title>Sneaker Land - Admin</title>
   <!-- base:css -->
   <link rel="stylesheet" href="../vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../vendors/base/vendor.bundle.base.css">
@@ -17,10 +20,13 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="../css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="../images/favicon.png" />
+  <link rel="icon" href="../images/amusement-park.png" type="image/x-icon">
   
 </head>
 <script>
+  function logout(){
+    window.close();
+  }
 </script>
 <body>
   <div class="container-scroller">
@@ -35,10 +41,14 @@
             </div>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown  d-lg-flex d-none">
-              <a  href="logout.php" target="_blank" onclick= "window.close();" class="btn btn-inverse-primary btn-sm">Log Out </a>
+              <a  href="logout.php" target="_blank" onclick= "logout()" class="btn btn-inverse-primary btn-sm">Log Out </a>
                       </li>
+                      
+				<li class="nav-item dropdown  d-lg-flex d-none">
+				<a  href="change_pass.php" class="btn btn-inverse-primary btn-sm">Change Password </a>
+                </li>
               <li class="nav-item nav-profile">
-                          <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                          <a class="nav-link" href="edit_profile.php" data-bs-toggle="dropdown" id="profileDropdown">
                   <span class="nav-profile-name"><?php echo $_SESSION['email'] ?></span>
                   <span class="online-status"></span>
                             <img src="../images/faces/face28.png" alt="profile"/>
@@ -133,7 +143,7 @@
             <div class="content-wrapper">       
         <?php
           require("../database/connect.php");
-          $q="select r.*, a.to_age, a.from_age from tbl_ride as r INNER JOIN tbl_age as a on r.age_id = a.age_id;";
+          $q="select r.*, a.to_age, a.from_age from tbl_ride as r INNER JOIN tbl_age as a on r.age_id = a.age_id  order by ride_id desc;";
           $result=mysqli_query($mysql,$q) or die("Query Failed!!!".mysqli_error($mysql));
           if(mysqli_num_rows($result)>0){
             echo "<div class='row'>

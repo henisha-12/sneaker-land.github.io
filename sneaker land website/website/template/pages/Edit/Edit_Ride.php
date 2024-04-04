@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+if (!isset( $_SESSION["email"])) {
+  die("");
+}
   $rid = $_GET['ride_id'];
   require('../../database/connect.php');
   $q="Select * from tbl_ride where ride_id=$rid";
@@ -24,10 +26,9 @@ session_start();
   
 </head>
 <script>
-function ConfirmDelete()
-{
-  return confirm("Are you sure you want to delete?");
-}
+  function logout(){
+    window.close();
+  }
 </script>
 <body>
   <div class="container-scroller">
@@ -42,8 +43,11 @@ function ConfirmDelete()
             </div>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown  d-lg-flex d-none">
-              <a  href="../logout.php" target="_blank" onclick= "window.close();" class="btn btn-inverse-primary btn-sm">Log Out </a>
+              <a  href="../logout.php" target="_blank" onclick= "logout()" class="btn btn-inverse-primary btn-sm">Log Out </a>
                       </li>
+				<li class="nav-item dropdown  d-lg-flex d-none">
+				<a  href="" class="btn btn-inverse-primary btn-sm">Change Password </a>
+                </li>
               <li class="nav-item nav-profile">
                           <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                   <span class="nav-profile-name"><?php echo $_SESSION['email'] ?></span>
@@ -140,7 +144,7 @@ function ConfirmDelete()
                   <div class='card'>
                     <div class='row'>
                       <div class='card-body'>
-                        <h4 class='card-title'>Add Rides</h4>
+                        <h4 class='card-title'>Edit Rides</h4>
                         <form action="" method="POST" enctype='multipart/form-data'>
                           <label for="rnm">Ride Name</label>                          
                           <!-- <span class="error">* <?php echo $rnmErr;?></span><br> -->
@@ -214,7 +218,7 @@ function ConfirmDelete()
                               </label>
                             </div>
                           <input type="hidden" name="img_path" id="img2" value="<?php echo $r[1];?>">
-                          <input class='w-100 btn btn-inverse-primary btn-large btn-block ' name='updt' id='updt' type="submit" value="Add Ride">
+                          <input class='w-100 btn btn-inverse-primary btn-large btn-block ' name='updt' id='updt' type="submit" value="Edit Ride">
                         </form>
                       </div>
                     </div>

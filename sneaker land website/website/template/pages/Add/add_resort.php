@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if (!isset( $_SESSION["email"])) {
+      die("");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +12,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Kapella Bootstrap Admin Dashboard Template</title>
+  <title>Sneaker Land - Admin</title>
   <!-- base:css -->
   <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../vendors/base/vendor.bundle.base.css">
@@ -17,14 +20,13 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="../../css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="../../images/favicon.png" />
-  
+  <link rel="icon" href="../../images/amusement-park.png" type="image/x-icon">
+
 </head>
-<script>
-function ConfirmDelete()
-{
-  return confirm("Are you sure you want to delete?");
-}
+  <script>
+  function logout(){
+    window.close();
+  }
 </script>
 <body>
   <div class="container-scroller">
@@ -39,10 +41,13 @@ function ConfirmDelete()
             </div>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown  d-lg-flex d-none">
-              <a  href="../logout.php" target="_blank" onclick= "window.close();" class="btn btn-inverse-primary btn-sm">Log Out </a>
+              <a  href="../logout.php" target="_blank" onclick= "logout()" class="btn btn-inverse-primary btn-sm">Log Out </a>
                       </li>
+				<li class="nav-item dropdown  d-lg-flex d-none">
+				<a  href="../change_pass.php" class="btn btn-inverse-primary btn-sm">Change Password </a>
+                </li>
               <li class="nav-item nav-profile">
-                          <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                          <a class="nav-link" href="../edit_profile.php" data-bs-toggle="dropdown" id="profileDropdown">
                   <span class="nav-profile-name"><?php echo $_SESSION['email'] ?></span>
                   <span class="online-status"></span>
                             <img src="../../images/faces/face28.png" alt="profile"/>
@@ -139,14 +144,15 @@ function ConfirmDelete()
                       <div class='card-body'>
                         <h4 class='card-title'>Add Room</h4>
                         <form action="" method="POST" enctype='multipart/form-data'>
-                          <label for="rtp">Room Type</label><br>
-                          <input class='form-control border-dark' name="rtp" type="text" id='rtp' required/><br>
-                          <label for="info">Information</label><br>
-                          <textarea class='form-control border-dark' name="info" id='info' rows=5 required></textarea><br>
-                          <label for="prc">Price</label><br>
-                          <input class='form-control border-dark' name="prc" type="number" id='prc' step='500' min='0' required/><br>
-                          <label for="no">No of Rooms</label><br>
-                          <input class='form-control border-dark' name="no" type="number" id='no' min="0" required/><br>
+                          <label for="rtp">Room Type</label><span class="err" id="rtp_err">*</span><br>
+                          <input class='form-control border-dark' name="rtp" type="text" id='rtp'/><br>
+                          <label for="info">Information</label><span class="err" id="info_err">*</span><br>
+                          <textarea class='form-control border-dark' name="info" id='info' rows=5></textarea><br>
+                          <label for="prc">Price</label><span class="err" id="prc_err">*</span><br>
+                          <input class='form-control border-dark' name="prc" type="number" id='prc' step='500' min='0'/><br>
+                          <label for="no">No of Rooms</label><span class="err" id="no_err">*</span><br>
+                          <input class='form-control border-dark' name="no" type="number" id='no' min="0"/><br>
+                          <span class="err" id="img_err">*</span>
                           <div class="hero">
                               <label for="input-file" id='drop-area'>
                                 <input type="file" accept="image/*" name="img" id="input-file" hidden>
@@ -157,7 +163,7 @@ function ConfirmDelete()
                                 </div>
                               </label>
                             </div>
-                          <input class='w-100 btn btn-inverse-primary btn-large btn-block' name="add" id="add" type="submit" value="Add Event">
+                          <input class='w-100 btn btn-inverse-primary btn-large btn-block' name="add" id="add" type="submit" value="Add Room">
                         </form>
                       </div>
                     </div>
@@ -177,6 +183,7 @@ function ConfirmDelete()
 <?php
 
         if (isset($_REQUEST['add'])) {
+          $rtp_err ="";$info_err="";$prc_err="";$no_err="";$img_err = "";
           require("../../database/connect.php");
           $rtp=$_REQUEST['rtp'];
           $info=$_REQUEST['info'];
@@ -184,22 +191,80 @@ function ConfirmDelete()
           $no=$_REQUEST['no'];
           $img_name=$_FILES['img']['name'];
           $tmp_loc=$_FILES['img']['tmp_name'];
-          $q = "insert into tbl_resort values(null,'$rtp','$info','$prc','$no','$img_name')";
-          echo $q;
-            if(file_exists('../../images/Resort/'.$img_name)){
-              echo "<h1>File Already Exist!!!</h1>";
+
+          if ($rtp == "" || $info == "" || $prc== "" || $no == "" || $img_name == "") {
+            if($rtp == ""){
+              $rtp_err = "This field is required";
+              echo "<script> document.querySelector('#rtp_err').innerHTML='$rtp_err'</script>";
             }
             else{
-              if (mysqli_query($mysql,$q)) {
-                echo "Inserted Successfully!!";
-                move_uploaded_file($tmp_loc,'../../images/Resort/'.$img_name);
-                echo "<script type='text/javascript'>window.location.href='../Resort.php'</script>";
-              }
-              else{
-                echo "<h1>Insertion Failed!!!</h1>";
-              }
+              $rtp_err = "*";
+              echo "<script> document.querySelector('#rtp_err').innerHTML='$rtp_err'</script>";
+            
+            }
+
+            
+            if($info == ""){
+              $info_err = "This field is required";
+              echo "<script> document.querySelector('#info_err').innerHTML='$info_err'</script>";
+            }
+            else{
+              $info_err = "*";
+              echo "<script> document.querySelector('#info_err').innerHTML='$info_err'</script>";
+            
+            }
+
+
+            if($prc == ""){
+              $prc_err = "This field is required";
+              echo "<script> document.querySelector('#prc_err').innerHTML='$prc_err'</script>";
+            }
+            else{
+              $prc_err = "*";
+              echo "<script> document.querySelector('#enm_err').innerHTML='$prc_err'</script>";
+            
+            }
+
+
+            if($no == ""){
+              $no_err = "This field is required";
+              echo "<script> document.querySelector('#no_err').innerHTML='$no_err'</script>";
+            }
+            else{
+              $no_err = "*";
+              echo "<script> document.querySelector('#no_err').innerHTML='$no_err'</script>";
+            
+            } 
+
+
+            if($img_name == ""){
+              $img_err = "This field is required";
+              echo "<script> document.querySelector('#img_err').innerHTML='$img_err'</script>";
+            }
+            else{
+              $img_err = "*";
+              echo "<script> document.querySelector('#img_err').innerHTML='$img_err'</script>";
+            
             }
           }
+          else{
+            $q = "insert into tbl_resort values(null,'$rtp','$info','$prc','$no','$img_name')";
+            echo $q;
+              if(file_exists('../../images/Resort/'.$img_name)){
+                echo "<h1>File Already Exist!!!</h1>";
+              }
+              else{
+                if (mysqli_query($mysql,$q)) {
+                  echo "Inserted Successfully!!";
+                  move_uploaded_file($tmp_loc,'../../images/Resort/'.$img_name);
+                  echo "<script type='text/javascript'>window.location.href='../Resort.php'</script>";
+                }
+                else{
+                  echo "<h1>Insertion Failed!!!</h1>";
+                }
+              }
+          }
+        }
         ?>
 
 <script src="../../../vendors/base/vendor.bundle.base.js"></script>

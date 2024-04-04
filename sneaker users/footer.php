@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Restar-Amusment Park</title>
+    <title>Sneaker Land-Adventure Park</title>
 
     <!-- Fav Icon -->
     <link rel="icon" href="assets/images/amusement-park.png" type="image/x-icon">
@@ -51,9 +51,8 @@
                             <div class="widget-content">
                                 <ul class="links-list clearfix">
                                     <li><a href="about.php">ABOUT US</a></li>
-                                    <li><a href="ticket.php">BOOK TICKETS</a></li>
+                                    <li><a href="package.php">BOOK TICKETS</a></li>
                                     <li><a href="contact.php">OUR CONTACT</a></li>
-                                    <li><a href="gallery.php">OUR GALLERY</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -66,7 +65,7 @@
                             <div class="widget-content">
                                 <ul class="info clearfix">
                                     <li><i class="flaticon-telephone"></i><a href="tel:6668880000">666 888 0000</a></li>
-                                    <li><i class="flaticon-email"></i><a href="mailto:needhelp@company.com">needhelp@company.com</a></li>
+                                    <li><i class="flaticon-email"></i><a href="mailto:needhelp@company.com">sneakerland218@gmail.com</a></li>
                                     <li><i class="flaticon-pin"></i>66 broklyn golden street line new york</li>
                                 </ul>
                             </div>
@@ -78,7 +77,7 @@
         <div class="footer-bottom centred">
             <div class="auto-container">
                 <div class="copyright">
-                    <p>&copy; Copyright 2024 by <a href="index.php">restar.com</a></p>
+                    <p>&copy; Copyright 2024 by <a href="index.php">Sneaker Land</a></p>
                 </div>
             </div>
         </div>
